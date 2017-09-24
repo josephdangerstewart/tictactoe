@@ -9,7 +9,6 @@ public class MainState extends State {
 
     public MainState(String backgroundName) {
         super(backgroundName);
-        System.out.println("Hello world!");
     }
 
 }
