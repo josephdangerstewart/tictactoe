@@ -8,9 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.tictactoe.apps.clock_app.ClockApp;
-import com.tictactoe.apps.npc_buddy.NPCApp;
-import com.tictactoe.apps.party_manager.PartyManager;
+import com.tictactoe.state.MainState;
 import com.tictactoe.state.meta.GameStateManager;
 import com.tictactoe.state.meta.State;
 
@@ -27,44 +25,16 @@ public class TicTacToeMain extends ApplicationAdapter implements InputProcessor 
 
 	private Vector3 mousePos;
 	private Prefs prefs;
-	private AppPool appPool;
 
-	public static final int NPC_APP = 6;
-	public static final int CLOCK_APP = 5;
-	public static final int PARTY_MANAGER = 4;
-	public static final int NEW_STATE = 3;
-	public static final int CONTINUE_STATE = 2;
-	public static final int MAIN_STATE = 1;
-	public static final int MENU_STATE = 0;
+	public static final int MAIN_STATE = 0;
 
     private void initStates() {
 
-        gsm = new GameStateManager(prefs,appPool);
+        gsm = new GameStateManager(prefs);
         State.gsm = gsm;
 
         try {
-            PartyManager pm = new PartyManager("images/main/background.png");
-            pm.setID(PARTY_MANAGER);
-
-            ClockApp clockApp = new ClockApp("images/main/background.png");
-            clockApp.setID(CLOCK_APP);
-
-            NPCApp npcApp = new NPCApp("images/main/background.png");
-            npcApp.setID(NPC_APP);
-
-            appPool.add(pm);
-            appPool.add(clockApp);
-            appPool.add(npcApp);
-
-            gsm.addState(new MenuState("images/main/background.png"));
-            gsm.addState(new MainState("images/main/background.png"));
-            gsm.addState(new ContinueState("images/main/background.png"));
-            gsm.addState(new NewState("images/main/background.png"));
-            gsm.addState(pm);
-            gsm.addState(clockApp);
-            gsm.addState(npcApp);
-
-            prefs.setSideBarApp(pm.getName());
+            gsm.addState(new MainState("images/background.png"));
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -77,10 +47,9 @@ public class TicTacToeMain extends ApplicationAdapter implements InputProcessor 
 	@Override
 	public void create () {
 
-        Gdx.graphics.setTitle("Campaign Buddy");
+        Gdx.graphics.setTitle("Ultimate Tic Tac Toe");
 
         prefs = new Prefs();
-        appPool = new AppPool();
 
 	    camera = new OrthographicCamera();
 	    viewport = new FitViewport(WIDTH, HEIGHT, camera);

@@ -13,13 +13,11 @@ public class GameStateManager {
     private ArrayList<State> states;
     private int curState;
     private Prefs prefs;
-    private AppPool appPool;
 
-    public GameStateManager(Prefs prefs, AppPool pool) {
+    public GameStateManager(Prefs prefs) {
         states = new ArrayList<State>();
         curState = 0;
         this.prefs = prefs;
-        this.appPool = pool;
     }
 
     public void addState(State state) {
@@ -31,10 +29,6 @@ public class GameStateManager {
             curState = state;
             states.get(curState).init();
         }
-    }
-
-    public AppPool getPool() {
-        return appPool;
     }
 
     public void init() {
